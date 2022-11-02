@@ -42,6 +42,7 @@ extension BluetoothSettingViewController: CBCentralManagerDelegate {
         case .poweredOn:
             // 블루투스가 활성화되고 승인되었으며 앱 사용 준비가 됨
             print("파워 온")
+            self.centralManager.scanForPeripherals(withServices: nil)
         @unknown default:
             print("모름")
         }
@@ -56,6 +57,9 @@ extension BluetoothSettingViewController: CBCentralManagerDelegate {
     ///   - RSSI: <#RSSI description#>
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         print("찾는 중")
+        print("주변 장치", peripheral)
+        print("이름", peripheral.name ?? "unnamed device")
+        print("기능", peripheral.services)
     }
     
     /// 연결되면 호출
@@ -66,6 +70,7 @@ extension BluetoothSettingViewController: CBCentralManagerDelegate {
     ///   - peripheral: <#peripheral description#>
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         print("찾음")
+        print("기기 정보", peripheral)
     }
     
     
