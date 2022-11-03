@@ -10,6 +10,6 @@ import CoreBluetooth
 
 class BluetoothSerial: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        <#code#>
+        
     }
 }
