@@ -10,10 +10,8 @@ import CoreBluetooth
 
 class BluetoothSettingViewController: UIViewController {
     
-    private var centralManager: CBCentralManager!
-    private var peripheral: CBPeripheral!
-    var connectedPeripheral: CBPeripheral?
-
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         centralManager = CBCentralManager(delegate: self, queue: nil)
@@ -49,41 +47,8 @@ extension BluetoothSettingViewController: CBCentralManagerDelegate {
     }
     
     
-    /// 장치를 찾았을 때 호출
-    /// - Parameters:
-    ///   - central: <#central description#>
-    ///   - peripheral: <#peripheral description#>
-    ///   - advertisementData: <#advertisementData description#>
-    ///   - RSSI: <#RSSI description#>
-    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        print("찾는 중")
-        print("주변 장치", peripheral)
-        print("이름", peripheral.name ?? "unnamed device")
-        print("기능", peripheral.services)
-    }
-    
-    /// 연결되면 호출
-    ///
-    /// 기기의 정보를 받아오거나 수정
-    /// - Parameters:
-    ///   - central: <#central description#>
-    ///   - peripheral: <#peripheral description#>
-    func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-        print("찾음")
-        print("기기 정보", peripheral)
-    }
-    
-    
 }
 
 extension BluetoothSettingViewController: CBPeripheralDelegate {
-    /// 주변 장치에서 서비스 정보를 받게 되면 호출
-    /// - Parameters:
-    ///   - peripheral: <#peripheral description#>
-    ///   - error: <#error description#>
-    func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
-        print("정보 받음")
-        print("peripheral", peripheral)
-        print("services", error)
-    }
+    
 }
