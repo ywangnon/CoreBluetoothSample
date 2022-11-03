@@ -10,8 +10,11 @@ import CoreBluetooth
 
 class BluetoothSettingViewController: UIViewController {
     
-    
-    
+    private var centralManager: CBCentralManager!
+    private var peripheral: CBPeripheral!
+    var connectedPeripheral: CBPeripheral?
+    var miband: CBPeripheral!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         centralManager = CBCentralManager(delegate: self, queue: nil)
@@ -40,15 +43,84 @@ extension BluetoothSettingViewController: CBCentralManagerDelegate {
         case .poweredOn:
             // 블루투스가 활성화되고 승인되었으며 앱 사용 준비가 됨
             print("파워 온")
-            self.centralManager.scanForPeripherals(withServices: nil)
+            self.centralManager.scanForPeripherals(withServices: nil, options: nil)
         @unknown default:
             print("모름")
         }
     }
     
     
+    /// 장치를 찾았을 때 호출
+    /// - Parameters:
+    ///   - central: <#central description#>
+    ///   - peripheral: <#peripheral description#>
+    ///   - advertisementData: <#advertisementData description#>
+    ///   - RSSI: <#RSSI description#>
+    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
+        print("찾는 중")
+        print("주변 장치", peripheral)
+        print("이름", peripheral.name ?? "unnamed device")
+        
+        if peripheral.name == "Mi Smart Band 5" {
+            self.miband = peripheral
+            self.miband.delegate = self
+            centralManager.stopScan()
+            centralManager.connect(self.miband, options: nil)
+            print("서비스", self.miband.identifier.uuidString)
+        }
+    }
+    
+    /// 연결되면 호출
+    ///
+    /// 기기의 정보를 받아오거나 수정
+    /// - Parameters:
+    ///   - central: <#central description#>
+    ///   - peripheral: <#peripheral description#>
+    func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
+        print("찾음")
+        print("기기 정보", peripheral)
+        peripheral.discoverServices(nil)
+    }
+    
+    
 }
 
 extension BluetoothSettingViewController: CBPeripheralDelegate {
+    /// 주변 장치에서 서비스 정보를 받게 되면 호출
+    /// - Parameters:
+    ///   - peripheral: <#peripheral description#>
+    ///   - error: <#error description#>
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
+        print("정보 받음")
+        print("peripheral", peripheral)
+        
+        guard let services = peripheral.services else { return }
+        for service in services {
+            print(service)
+            peripheral.discoverCharacteristics(nil, for: service)
+        }
+        
+//        if let servicePeripherals = peripheral.services as [CBService]? {
+//            for service in servicePeripherals {
+//                peripheral.discoverCharacteristics(nil, for: service)
+//                print(service.uuid)
+//            }
+//        }
+    }
     
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
+        guard let characteristics = service.characteristics else { return }
+        for characteristic in characteristics {
+            print("characteristic: \(characteristic)")
+            if characteristic.properties.contains(.read) {
+                print("readable")
+                peripheral.readValue(for: characteristic)
+            }
+        }
+    }
+    
+    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+        print("didUpdateValueFor characteristic")
+        print(characteristic.value ?? "can't get value")
+    }
 }
