@@ -45,10 +45,10 @@
             </objects>
             <point key="canvasLocation" x="138" y="4"/>
         </scene>
-        <!--Bluetooth Setting View Controller-->
+        <!--Miband View Controller-->
         <scene sceneID="3Xn-YD-4nD">
             <objects>
-                <viewController id="AOP-nq-zIE" customClass="BluetoothSettingViewController" customModule="CoreBluetoothSample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="AOP-nq-zIE" customClass="MibandViewController" customModule="CoreBluetoothSample" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="xWW-lD-hQF">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="787"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

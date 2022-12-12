@@ -137,9 +137,9 @@ extension BluetoothSettingViewController: CBPeripheralDelegate {
 //        print("didUpdateValueFor characteristic")
 //        print(characteristic.value ?? "can't get value")
         
-        let valueBytes: [UInt8] = characteristic.value?.map({ v in
-            return v
-        })
+//        let valueBytes: [UInt8] = characteristic.value?.map({ v in
+//            return v
+//        })
     }
 }
 
