@@ -51,11 +51,6 @@ extension BluetoothSettingViewController: CBCentralManagerDelegate {
     
     
     /// 장치를 찾았을 때 호출
-    /// - Parameters:
-    ///   - central: <#central description#>
-    ///   - peripheral: <#peripheral description#>
-    ///   - advertisementData: <#advertisementData description#>
-    ///   - RSSI: <#RSSI description#>
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         print("찾는 중")
         print("주변 장치", peripheral)
@@ -73,9 +68,6 @@ extension BluetoothSettingViewController: CBCentralManagerDelegate {
     /// 연결되면 호출
     ///
     /// 기기의 정보를 받아오거나 수정
-    /// - Parameters:
-    ///   - central: <#central description#>
-    ///   - peripheral: <#peripheral description#>
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         print("찾음")
         print("기기 정보", peripheral)
@@ -87,40 +79,76 @@ extension BluetoothSettingViewController: CBCentralManagerDelegate {
 
 extension BluetoothSettingViewController: CBPeripheralDelegate {
     /// 주변 장치에서 서비스 정보를 받게 되면 호출
-    /// - Parameters:
-    ///   - peripheral: <#peripheral description#>
-    ///   - error: <#error description#>
+    /// service 검색에 성공시 호출되는 메서드
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         print("정보 받음")
         print("peripheral", peripheral)
         
         guard let services = peripheral.services else { return }
+        
         for service in services {
             print(service)
+            print("service Name: \(service.uuid), uuidString: \(service.uuid.uuidString)")
+            // 검색된 모든 service에 대해서 characteristic을 검색.
+            // 파라미터로 nil을 설정하면 해당 service의 모든 characiteristic 검색
             peripheral.discoverCharacteristics(nil, for: service)
         }
-        
-//        if let servicePeripherals = peripheral.services as [CBService]? {
-//            for service in servicePeripherals {
-//                peripheral.discoverCharacteristics(nil, for: service)
-//                print(service.uuid)
+    }
+    
+    /**
+     <CBService: 0x2833d8800, isPrimary = YES, UUID = Device Information>
+     <CBService: 0x2833d8380, isPrimary = YES, UUID = 00001530-0000-3512-2118-0009AF100700>
+     <CBService: 0x2833d8880, isPrimary = YES, UUID = 1811>
+     <CBService: 0x2833d8440, isPrimary = YES, UUID = 1802>
+     <CBService: 0x2833d8640, isPrimary = YES, UUID = Heart Rate>
+     <CBService: 0x2833d8980, isPrimary = YES, UUID = FEE0>
+     <CBService: 0x2833d86c0, isPrimary = YES, UUID = FEE1>
+     <CBService: 0x2833d8740, isPrimary = YES, UUID = Battery>
+     <CBService: 0x2833d8840, isPrimary = YES, UUID = 3802>
+     */
+    
+    // characteristic 검색에 성공 시 호출되는 메서드
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
+//        guard let characteristics = service.characteristics else { return }
+//
+//        for characteristic in characteristics {
+//            print("characteristic: \(characteristic)")
+//
+//            if characteristic.properties.contains(.read) {
+//                print("readable")
+//                peripheral.readValue(for: characteristic)
 //            }
 //        }
-    }
-    
-    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
-        guard let characteristics = service.characteristics else { return }
-        for characteristic in characteristics {
-            print("characteristic: \(characteristic)")
+        
+        print(error ?? service.characteristics)
+        
+        service.characteristics?.forEach({ characteristic in
             if characteristic.properties.contains(.read) {
-                print("readable")
                 peripheral.readValue(for: characteristic)
             }
-        }
+            if characteristic.properties.contains(.notify) {
+                peripheral.setNotifyValue(true, for: characteristic)
+            }
+        })
     }
     
+    
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
-        print("didUpdateValueFor characteristic")
-        print(characteristic.value ?? "can't get value")
+//        print("didUpdateValueFor characteristic")
+//        print(characteristic.value ?? "can't get value")
+        
+        let valueBytes: [UInt8] = characteristic.value?.map({ v in
+            return v
+        })
+    }
+}
+
+extension UInt32 {
+    static func from(bytes: [UInt8]) -> UInt32? {
+        guard bytes.count <= 4 else { return nil }
+        return bytes
+            .enumerated()
+            .map { UInt32($0.element) << UInt32($0.offset * 8) }
+            .reduce(0, +)
     }
 }

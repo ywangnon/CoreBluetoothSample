@@ -18,6 +18,7 @@
 		01674887291158120072380D /* CoreBluetoothSampleUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01674886291158120072380D /* CoreBluetoothSampleUITestsLaunchTests.swift */; };
 		01674895291158790072380D /* BluetoothSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01674894291158790072380D /* BluetoothSettingViewController.swift */; };
 		01AABAD2291400920099AB85 /* BluetoothSerial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AABAD1291400920099AB85 /* BluetoothSerial.swift */; };
+		01E501462944DC5000636573 /* WalkCountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E501452944DC5000636573 /* WalkCountViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,7 @@
 		01674893291158520072380D /* CoreBluetoothStudy.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CoreBluetoothStudy.md; sourceTree = "<group>"; };
 		01674894291158790072380D /* BluetoothSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothSettingViewController.swift; sourceTree = "<group>"; };
 		01AABAD1291400920099AB85 /* BluetoothSerial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothSerial.swift; sourceTree = "<group>"; };
+		01E501452944DC5000636573 /* WalkCountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkCountViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 				01674865291158100072380D /* SceneDelegate.swift */,
 				01674867291158100072380D /* ViewController.swift */,
 				01674894291158790072380D /* BluetoothSettingViewController.swift */,
+				01E501452944DC5000636573 /* WalkCountViewController.swift */,
 				01AABAD1291400920099AB85 /* BluetoothSerial.swift */,
 				01674893291158520072380D /* CoreBluetoothStudy.md */,
 				01674869291158100072380D /* Main.storyboard */,
@@ -271,6 +274,7 @@
 				01674895291158790072380D /* BluetoothSettingViewController.swift in Sources */,
 				01674866291158100072380D /* SceneDelegate.swift in Sources */,
 				01AABAD2291400920099AB85 /* BluetoothSerial.swift in Sources */,
+				01E501462944DC5000636573 /* WalkCountViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
