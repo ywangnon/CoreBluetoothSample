@@ -11,42 +11,37 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
+    // MARK: - Scene Lifecycle
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
+        // UIWindowScene에 UIWindow `window`를 연결하는 설정을 옵션으로 할 수 있습니다.
+        // 스토리보드를 사용하는 경우, `window` 프로퍼티는 자동으로 초기화되고 연결됩니다.
         guard let _ = (scene as? UIWindowScene) else { return }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
-        // Called as the scene is being released by the system.
-        // This occurs shortly after the scene enters the background, or when its session is discarded.
-        // Release any resources associated with this scene that can be re-created the next time the scene connects.
-        // The scene may re-connect later, as its session was not necessarily discarded (see `application:didDiscardSceneSessions` instead).
+        // 시스템에 의해 씬이 해제될 때 호출됩니다.
+        // 씬이 백그라운드로 들어가거나 세션이 폐기될 때 발생합니다.
+        // 이 씬에 관련된 리소스를 해제할 수 있습니다.
     }
 
     func sceneDidBecomeActive(_ scene: UIScene) {
-        // Called when the scene has moved from an inactive state to an active state.
-        // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+        // 씬이 비활성 상태에서 활성 상태로 변경될 때 호출됩니다.
+        // 비활성 상태에서 일시 중지된 작업을 다시 시작할 수 있습니다.
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
-        // Called when the scene will move from an active state to an inactive state.
-        // This may occur due to temporary interruptions (ex. an incoming phone call).
+        // 씬이 활성 상태에서 비활성 상태로 이동할 때 호출됩니다.
+        // 예를 들어, 전화가 오는 등의 일시적인 방해가 있을 때 발생합니다.
     }
 
     func sceneWillEnterForeground(_ scene: UIScene) {
-        // Called as the scene transitions from the background to the foreground.
-        // Use this method to undo the changes made on entering the background.
+        // 씬이 백그라운드에서 포그라운드로 전환될 때 호출됩니다.
+        // 백그라운드로 들어갈 때의 변경사항을 되돌릴 수 있습니다.
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
-        // Called as the scene transitions from the foreground to the background.
-        // Use this method to save data, release shared resources, and store enough scene-specific state information
-        // to restore the scene back to its current state.
+        // 씬이 포그라운드에서 백그라운드로 전환될 때 호출됩니다.
+        // 데이터를 저장하고, 공유 리소스를 해제하고, 씬의 상태 정보를 저장하여 복원할 수 있도록 합니다.
     }
-
-
 }
-
